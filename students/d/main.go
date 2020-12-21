@@ -20,7 +20,7 @@ type Story_arc struct {
 	} `json:"options"`
 }
 
-func main() {
+func load_story_data() (loaded_stories stories) {
 	//load JSON file into memory. Check for load error.
 	jsonFile, err := os.Open("./gopher.json")
 	if err != nil {
@@ -39,11 +39,16 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+	return stories
+}
+
+func main() {
+	loaded_stories := load_story_data()
 
 	//output check
 	fmt.Println("Checking how we unbundled the json file: ")
 
-	for key, arc := range stories {
+	for key, arc := range loaded_stories {
 		fmt.Printf("Current story is: %s with the title of %s\n", key, arc.Title)
 	}
 }
